@@ -5,12 +5,13 @@ docling-beta is a Python project that converts web pages using the Docling libra
 ## Features
 
 - Reads URLs from `urls.txt` (one URL per line, ignoring empty lines).
+- Sorts the URLs by primary domain and URL for consistent processing. For example, **asimov.academy** and **hub.asimov.academy** are grouped together under **asimov.academy**.
 - Converts each URL using the Docling library.
 - Limits the processing time for each URL to 1 minute to avoid timeouts.
 - Saves the results in Markdown (`.md`) and JSON (`.json`) formats in the `scraping_data/<domain>/` directory.
 - Logs processing steps and errors (logs are output in Portuguese).
-- Clears the `urls.txt` file after processing to prevent reprocessing the same URLs.
-- Configurable webhook notifications: if the `webhook_notification` variable is set in the `.env` file, a POST request is sent with a JSON payload containing details about the processed URLs (grouped by domain).
+- Configurable webhook notifications: if the `webhook_notification` variable is set in the `.env` file, a POST request is sent with a JSON payload containing details about each processed URL (grouped by primary domain). Each URL entry includes the processing time (numeric and formatted).
+- Conditional clearing of `urls.txt`: if `mode` is set to `production` in the `.env` file, the `urls.txt` file is cleared after processing; if set to `development`, the file remains unchanged.
 
 ## Requirements
 
@@ -19,7 +20,7 @@ docling-beta is a Python project that converts web pages using the Docling libra
 - Dependencies:
   - `docling (>=2.29.0,<3.0.0)`
   - `python-dotenv (>=1.1.0,<2.0.0)`
-  - `requests` (ensure it is installed)
+  - `requests`
 
 ## Installation
 
@@ -36,16 +37,19 @@ docling-beta is a Python project that converts web pages using the Docling libra
 
 3. **Configure the environment:**
 
-    Create a `.env` file in the project root with at least the following variables:
-    ```
+    Create a `.env` file in the project root using the provided example:
+    ```env
     dir_save = /scraping_data
-    webhook_notification = https://your-webhook-url.com/notification
+    save_in = [markdown, json]
+    save_options = name.pages
+    save_name = [name, name.json]
+    webhook_notification = https://whk.a8z.com.br/webhook/docling
+    mode = development  # Change to 'production' in production mode
     ```
-    Replace `https://your-webhook-url.com/notification` with your actual webhook URL. If `webhook_notification` is left empty, the notification will not be sent.
 
 4. **Prepare the URLs file:**
 
-    Create a file named `urls.txt` in the project root, containing one URL per line.
+    Create a file named `urls.txt` in the project root, containing one URL per line. The URLs can be in any order; they will be sorted by the application.
 
 ## Usage
 
