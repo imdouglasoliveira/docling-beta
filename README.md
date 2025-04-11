@@ -26,7 +26,7 @@ docling-beta is a Python project that converts web pages using the Docling libra
 
 1. **Clone the repository:**
     ```bash
-    git clone https://your-repository-url.git
+    git clone https://github.com/imdouglasoliveira/docling-beta.git
     cd docling-beta
     ```
 
