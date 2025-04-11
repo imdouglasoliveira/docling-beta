@@ -1,0 +1,19 @@
+[project]
+name = "docling-beta"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Douglas Oliveira",email = "63203428+imdsoliveira@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "docling (>=2.29.0,<3.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "requests (>=2.32.3,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
